@@ -2,6 +2,7 @@ import React from "react";
 
 import Airqualitycard from './airqualitycard';
 import Selection from "./select";
+
 function Airquality() {
     return (
         <div id="air_quality_container">
