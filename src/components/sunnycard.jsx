@@ -1,10 +1,32 @@
 
-import React from "react";
+
 import Holder2 from "./holder-one";
 import Holder1 from "./holder";
 import Selection from "./select";
+import { useState } from "react";
+import { useEffect } from "react";
 
-function Sunny() {
+function Sunny({ weather }) {
+
+    if (!weather) {
+        return <div>Loading...</div>;
+    }
+
+     const [gettoday, settoday] = useState('');
+
+    function updatetoday() {
+        const now = new Date();
+        const options = {
+            day: 'numeric',   // 1, 2, 3...
+            month: 'long',    // January, February...
+        };
+        const todaystring = now.toLocaleDateString('en-US', options);
+        settoday(`Today, ${todaystring}`);
+    }
+    useEffect(() => {
+        updatetoday();
+    }, [])
+
     return (
         <div className="sunny_container">
             <Selection />
@@ -14,17 +36,17 @@ function Sunny() {
                     <img className="sunny_icon1" src="./images/sun (1).png" alt="sunny icon" />
                 </div>
                 <div className="sunny_heading">
-                    <p id="today" style={{ color: 'white' }}>Today, 14 April</p>
+                    <p id="today" style={{ color: 'white' }}>{gettoday}</p>
                 </div>
                 <div className="sunny_temp">
-                    <h2>29°C</h2>
+                    <h2>{`${weather.main.temp}°C`}</h2>
                 </div>
             </div>
 
 
             <div className="footer_sunny">
                 <div className="footer_sunny_heading">
-                    <h2>Sunny</h2>
+                    <h2>{weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1)}</h2>
                 </div>
                 <div className="footer_sunny_info">
                     <div className="footer_total">
@@ -32,8 +54,8 @@ function Sunny() {
                         <Holder1 imgs="./images/drop.png" value="Hum" />
                     </div>
                     <div className="footer_total" id="footer_total">
-                        <Holder2 wind="19 Km/h" />
-                        <Holder2 wind="22 %" />
+                        <Holder2 wind={`${weather.wind.speed}km/h`} />
+                        <Holder2 wind={`${weather.main.humidity}%`} />
                     </div>
                 </div>
             </div>
