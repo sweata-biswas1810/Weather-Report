@@ -1,21 +1,22 @@
-
-
-import React from "react";
 import WeeklyCards from "./weeklycard";
 
-function Weeklyweather() {
+function Weeklyweather({ weeklyData }) {
+  if (!weeklyData || weeklyData.length === 0) {
+    return <p>Loading weekly forecast...</p>;
+  }
 
-    return (
-        <div id="weekly_weather_conrainer">
-            <WeeklyCards day="Sun" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Mon" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Tue" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Wed" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Thu" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Fri" temp="25°C" imgs="./images/sun (1).png"/>
-            <WeeklyCards day="Sat" temp="25°C" imgs="./images/sun (1).png"/>
-        </div>
-    );
+  return (
+    <div id="weekly_weather_conrainer">
+      {weeklyData.map((dayData, index) => {
+        const date = new Date(dayData.date);
+        const day = date.toLocaleDateString("en-US", { weekday: "short" });
+        const temp = Math.round(dayData.day.avgtemp_c) + "°C";
+        const icon = "https:" + dayData.day.condition.icon;
+
+        return <WeeklyCards key={index} day={day} temp={temp} imgs={icon} />;
+      })}
+    </div>
+  );
 }
 
 export default Weeklyweather;

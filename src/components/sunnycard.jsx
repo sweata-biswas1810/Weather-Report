@@ -17,8 +17,8 @@ function Sunny({ weather }) {
     function updatetoday() {
         const now = new Date();
         const options = {
-            day: 'numeric',   // 1, 2, 3...
-            month: 'long',    // January, February...
+            day: 'numeric', 
+            month: 'long',   
         };
         const todaystring = now.toLocaleDateString('en-US', options);
         settoday(`Today, ${todaystring}`);
